@@ -1,0 +1,203 @@
+{
+  "id": "102019b67710cb57553a219e2032d8dd05f",
+  "version": "102019b67710cb5741287a4f12e5ec480d8",
+  "schema": {
+    "name": "body_metrics",
+    "description": "Tracks body measurements and weight for users.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the metric record.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Audit trail"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Audit trail"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "user_id",
+        "description": "Foreign key referencing the user.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relation key"
+        }
+      },
+      {
+        "name": "date",
+        "description": "Timestamp unix representing the date of the measurement.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Health data"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "weight",
+        "description": "User weight in kg or lbs.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Health data"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "body_fat",
+        "description": "Body fat percentage.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Health data"
+        },
+        "nullable": true,
+        "numeric": "float"
+      },
+      {
+        "name": "measurements",
+        "description": "Specific body measurements.",
+        "type": 102,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Health data"
+        },
+        "nullable": true,
+        "inner": [
+          {
+            "name": "chest",
+            "description": "Chest measurement.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Health data"
+            },
+            "nullable": true,
+            "numeric": "float"
+          },
+          {
+            "name": "waist",
+            "description": "Waist measurement.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Health data"
+            },
+            "nullable": true,
+            "numeric": "float"
+          },
+          {
+            "name": "hips",
+            "description": "Hips measurement.",
+            "type": 2,
+            "compliance": {
+              "confidentiality": 3,
+              "reason": "Health data"
+            },
+            "nullable": true,
+            "numeric": "float"
+          }
+        ]
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "user_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "user_id"
+        ],
+        "referenced_entity": {
+          "name": "users"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "6951c4ad9dafc927bdb52ba4",
+    "root": "6951c4ad9dafc927bdb52ba4",
+    "project": "6951c4ad9dafc927bdb52ba3",
+    "user": "88b1a3c0-a041-70c2-49d3-edea1653665e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

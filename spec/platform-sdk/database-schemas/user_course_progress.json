@@ -1,0 +1,164 @@
+{
+  "id": "102019b67710cb574fb9d4e382fa07055f9",
+  "version": "102019b67710cb5741287a4f12e5ec480d8",
+  "schema": {
+    "name": "user_course_progress",
+    "description": "Tracks the progress of a user within a specific course.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the progress record.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Primary key"
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail"
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail"
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Audit trail"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Audit trail"
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "user_id",
+        "description": "Foreign key referencing the user.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relation key"
+        }
+      },
+      {
+        "name": "course_id",
+        "description": "Foreign key referencing the course.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Relation key"
+        }
+      },
+      {
+        "name": "completion_percentage",
+        "description": "Percentage of the course completed (0-100).",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "User statistics"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "current_week",
+        "description": "Current week number the user is attending in the course.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "User statistics"
+        },
+        "numeric": "int"
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "course_id",
+          "user_id"
+        ],
+        "unique": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "user_id"
+        ],
+        "referenced_entity": {
+          "name": "users"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "course_id"
+        ],
+        "referenced_entity": {
+          "name": "workout_courses"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "6951c4ad9dafc927bdb52ba4",
+    "root": "6951c4ad9dafc927bdb52ba4",
+    "project": "6951c4ad9dafc927bdb52ba3",
+    "user": "88b1a3c0-a041-70c2-49d3-edea1653665e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}
